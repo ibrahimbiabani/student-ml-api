@@ -2,7 +2,7 @@
 
 import pytest
 
-from app import APP_VERSION, app
+from app import APP_VERSION, MODEL_VERSION, app
 
 
 @pytest.fixture
@@ -19,7 +19,8 @@ def test_health_endpoint(client):
     assert response.status_code == 200
     assert data["status"] == "healthy"
     assert data["application"] == "student-ml-api"
-    assert data["version"] == APP_VERSION
+    assert data["application_version"] == APP_VERSION
+    assert data["model_version"] == MODEL_VERSION
 
 
 def test_predict_success(client):

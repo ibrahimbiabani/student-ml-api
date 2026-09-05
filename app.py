@@ -31,6 +31,14 @@ def _read_version() -> str:
 
 APP_VERSION = _read_version()
 
+# The model itself has no separate training pipeline in this exercise, so
+# its version is tracked as a simple constant here rather than read from a
+# file - but it is deliberately independent of APP_VERSION. In a real MLOps
+# system the application and the model it serves are versioned and deployed
+# on different cadences (e.g. a new model can ship without an app release,
+# and vice versa), so the two version numbers must be reported separately.
+MODEL_VERSION = "model-1"
+
 app = Flask(__name__)
 
 
@@ -41,7 +49,8 @@ def health():
         {
             "status": "healthy",
             "application": APP_NAME,
-            "version": APP_VERSION,
+            "application_version": APP_VERSION,
+            "model_version": MODEL_VERSION,
         }
     ), 200
 
